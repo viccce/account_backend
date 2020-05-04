@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.backend.account.dao.AccountUserRelationDao">
+    <insert id="create" parameterType="com.example.backend.account.vo.AccountUserRelationVo">
+        insert into account_user_relation
+        (
+         account_id,
+         user_id
+        )
+        values
+        (
+         #{accountId},
+         #{userId}
+        )
+    </insert>
+
+    <delete id="delete" parameterType="com.example.backend.account.vo.AccountUserRelationVo">
+        delete from account_user_relation
+        where
+            <if test="accountId != null">
+                account_id = #{accountId}
+            </if>
+            <if test="userId != null">
+                user_id = #{userId}
+            </if>
+    </delete>
+
+    <select id="findList" parameterType="com.example.backend.account.vo.AccountUserRelationVo">
+        select
+            rel.account_id as accountId,
+            rel.user_id as userId,
+            u.nickname as nickname,
+            u.mobile as mobile,
+            u.email as email
+        from account_user_relation rel
+        left join user u on rel.user_id = u.id
+        where rel.account_id = #{accountId}
+    </select>
+</mapper>

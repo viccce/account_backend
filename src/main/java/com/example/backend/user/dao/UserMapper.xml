@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.backend.user.dao.UserDao">
+
+    <select id="findList"
+            parameterType="com.example.backend.user.vo.UserVo"
+            resultType="com.example.backend.user.vo.UserVo">
+        select
+            id as id,
+            nickname as nickname,
+            mobile as mobile,
+            email as email,
+            remark as remark
+        FROM
+            USER
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="nickname != null and nickname != ''">
+                and nickname like concat('%', #{nickname}, '%')
+            </if>
+            <if test="mobile != null and mobile != ''">
+                and mobile = #{mobile}
+            </if>
+            <if test="email != null and email !=''">
+                and email = #{email}
+            </if>
+        </where>
+    </select>
+
+    <select id="doDetail"
+            parameterType="com.example.backend.user.vo.UserVo"
+            resultType="com.example.backend.user.vo.UserVo">
+        select
+            id as id,
+            nickname as nickname,
+            mobile as mobile,
+            email as email,
+            password as password,
+            remark as remark
+        FROM
+            USER
+        <where>
+            <if test="id != null and id != 0">
+                and id = #{id}
+            </if>
+            <if test="mobile != null and mobile != ''">
+                and mobile = #{mobile}
+            </if>
+            <if test="email != null and email !=''">
+                and email = #{email}
+            </if>
+        </where>
+    </select>
+
+    <insert id="create"
+            parameterType="com.example.backend.user.vo.UserVo">
+        insert into USER
+        (
+            id,
+            nickname,
+            mobile,
+            email,
+            password,
+            remark
+        )
+        values
+        (
+            #{id},
+            #{nickname},
+            #{mobile},
+            #{email},
+            #{password},
+            #{remark}
+        )
+    </insert>
+
+    <insert id="update"
+            parameterType="com.example.backend.user.vo.UserVo">
+        update USER SET
+            nickname = #{nickname},
+            mobile = #{mobile},
+            email = #{email},
+            remark = #{remark}
+        where
+            id = #{id}
+    </insert>
+</mapper>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.backend.account.dao.AccountLineDao">
+
+    <select id="findList"
+            parameterType="com.example.backend.account.vo.AccountLineVo"
+            resultType="com.example.backend.account.vo.AccountLineVo">
+        select
+            account_line_id as accountLineId,
+            account_id as accountId,
+            change_money as changeMoney,
+            change_time as changeTime
+        from
+            account_line
+        <where>
+            account_id = #{accountId}
+        </where>
+    </select>
+
+    <insert id="create" parameterType="com.example.backend.account.vo.AccountLineVo">
+        insert into account_line
+        (
+            account_line_id,
+            account_id,
+            change_money,
+            change_time
+        )
+        values
+        (
+            #{accountLineId},
+            #{accountId},
+            #{changeMoney},
+            #{changeTime}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.example.backend.account.vo.AccountLineVo">
+        update account_line set
+            change_money = #{changeMoney},
+            change_time = #{changeTime}
+        where
+            account_line_id = #{accountLineId}
+    </update>
+
+    <delete id="delete" parameterType="com.example.backend.account.vo.AccountLineVo">
+        delete from account_line
+        <where>
+            <if test="accountLineId != null">
+                and account_line_id = #{accountLineId}
+            </if>
+            <if test="accountId != null">
+                and account_id = #{accountId}
+            </if>
+        </where>
+    </delete>
+</mapper>

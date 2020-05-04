@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.backend.account.dao.AccountDao">
+
+    <insert id="create" parameterType="com.example.backend.account.vo.AccountVo"
+        useGeneratedKeys="true" keyProperty="accountId" keyColumn="accountId">
+        insert into account
+        (
+            account_id,
+            account_name,
+            balance
+        )
+        values
+        (
+            #{accountId},
+            #{accountName},
+            #{balance}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.example.backend.account.vo.AccountVo">
+        update account set
+           account_name = #{accountName},
+           balance = #{balance}
+        where
+            account_id = #{accountId}
+    </update>
+
+    <delete id="delete" parameterType="com.example.backend.account.vo.AccountVo">
+        delete from
+            account
+        where
+            account_id = #{accountId}
+    </delete>
+
+    <select id="findList"
+            parameterType="com.example.backend.account.vo.AccountVo"
+            resultType="com.example.backend.account.vo.AccountVo">
+        select
+            ac.account_id as accountId,
+            ac.account_name as accountName,
+            ac.balance as balance
+        from
+            account ac
+        left join account_user_relation rel on ac.account_id = rel.account_id
+        <where>
+            rel.user_id = #{userId}
+            <if test="accountName != null and accountName != ''">
+                and account_name like concat('%', #{accountName}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="doDetail"
+            parameterType="com.example.backend.account.vo.AccountVo"
+            resultType="com.example.backend.account.vo.AccountVo">
+        select
+            account_id as accountId,
+            account_name as accountName,
+            balance as balance
+        from
+            account
+        where
+            account_id = #{accountId}
+    </select>
+</mapper>
