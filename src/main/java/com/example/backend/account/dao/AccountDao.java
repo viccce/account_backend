@@ -8,11 +8,11 @@ import java.util.List;
 @Mapper
 public interface AccountDao {
 
-    void create(AccountVo account);
+    int create(AccountVo account);
 
-    void update(AccountVo account);
+    int update(AccountVo account);
 
-    void delete(AccountVo account);
+    int delete(AccountVo account);
 
     List<AccountVo> findList(AccountVo account);
 

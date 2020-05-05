@@ -9,22 +9,26 @@
         (
             account_id,
             account_name,
-            balance
+            balance,
+            timestamp
         )
         values
         (
             #{accountId},
             #{accountName},
-            #{balance}
+            #{balance},
+            #{timestamp}
         )
     </insert>
 
     <update id="update" parameterType="com.example.backend.account.vo.AccountVo">
         update account set
-           account_name = #{accountName},
-           balance = #{balance}
+            account_name = #{accountName},
+            balance = #{balance},
+            timestamp = #{timestamp}
         where
-            account_id = #{accountId}
+            account_id = #{accountId} and
+            timestamp = #{oldTimestamp}
     </update>
 
     <delete id="delete" parameterType="com.example.backend.account.vo.AccountVo">
@@ -40,7 +44,8 @@
         select
             ac.account_id as accountId,
             ac.account_name as accountName,
-            ac.balance as balance
+            ac.balance as balance,
+            ac.timestamp as timestamp
         from
             account ac
         left join account_user_relation rel on ac.account_id = rel.account_id
@@ -58,7 +63,8 @@
         select
             account_id as accountId,
             account_name as accountName,
-            balance as balance
+            balance as balance,
+            timestamp as timestamp
         from
             account
         where

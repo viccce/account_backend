@@ -9,6 +9,8 @@ public class AccountVo implements Serializable {
     private Long accountId;
     private Long userId;
     private String accountName;
+    private Long timestamp;
+    private Long oldTimestamp;
     private long balance;
     private List<AccountLineVo> detailList;
     private String actionType;
@@ -61,5 +63,21 @@ public class AccountVo implements Serializable {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public Long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Long timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public Long getOldTimestamp() {
+        return oldTimestamp;
+    }
+
+    public void setOldTimestamp(Long oldTimestamp) {
+        this.oldTimestamp = oldTimestamp;
     }
 }

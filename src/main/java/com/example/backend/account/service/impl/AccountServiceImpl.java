@@ -34,27 +34,31 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void doSave(AccountVo account) {
-        if(account.getActionType() != null && "update".equals(account.getActionType())){
+        if (account.getActionType() != null && "update".equals(account.getActionType())) {
             this.update(account);
-        }else{
+        } else {
             this.create(account);
         }
     }
 
     private void create(AccountVo account) {
-        accountDao.create(account);
-        //插入关系表
-        AccountUserRelationVo relation = new AccountUserRelationVo();
-        relation.setAccountId(account.getAccountId());
-        relation.setUserId(account.getUserId());
-        relation.setActionType("create");
-        this.changeUser(relation);
+        account.setTimestamp(System.currentTimeMillis());
+        int count = accountDao.create(account);
+        if (count != 0) {
+            //插入关系表
+            AccountUserRelationVo relation = new AccountUserRelationVo();
+            relation.setAccountId(account.getAccountId());
+            relation.setUserId(account.getUserId());
+            relation.setActionType("create");
+            this.changeUser(relation);
+        }
     }
 
     private void update(AccountVo account) {
+        account.setTimestamp(System.currentTimeMillis());
         accountDao.update(account);
-        if(account.getDetailList() != null && !account.getDetailList().isEmpty()){
-            for(AccountLineVo line : account.getDetailList()){
+        if (account.getDetailList() != null && !account.getDetailList().isEmpty()) {
+            for (AccountLineVo line : account.getDetailList()) {
                 accountLineDao.create(line);
             }
         }
@@ -62,20 +66,22 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void doDelete(AccountVo account) {
-        accountDao.delete(account);
-        AccountLineVo line = new AccountLineVo();
-        line.setAccountId(account.getAccountId());
-        accountLineDao.delete(line);
-        AccountUserRelationVo relation = new AccountUserRelationVo();
-        relation.setAccountId(account.getAccountId());
-        accountUserRelationDao.delete(relation);
+        int count = accountDao.delete(account);
+        if (count != 0) {
+            AccountLineVo line = new AccountLineVo();
+            line.setAccountId(account.getAccountId());
+            accountLineDao.delete(line);
+            AccountUserRelationVo relation = new AccountUserRelationVo();
+            relation.setAccountId(account.getAccountId());
+            accountUserRelationDao.delete(relation);
+        }
     }
 
     @Override
     public void changeUser(AccountUserRelationVo relation) {
-        if(relation.getActionType() != null && "create".equals(relation.getActionType())){
+        if (relation.getActionType() != null && "create".equals(relation.getActionType())) {
             accountUserRelationDao.create(relation);
-        }else if(relation.getActionType() != null && "delete".equals(relation.getActionType())){
+        } else if (relation.getActionType() != null && "delete".equals(relation.getActionType())) {
             accountUserRelationDao.delete(relation);
         }
     }
