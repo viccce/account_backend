@@ -32,7 +32,7 @@ CREATE TABLE `account` (
   `account_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `account_name` varchar(64) NOT NULL COMMENT '账目名称',
   `balance` bigint(20) NOT NULL COMMENT '余额(单位: 分',
-  `timestamap` bigint(20) NOT NULL COMMENT '时间戳',
+  `timestamp` bigint(20) NOT NULL COMMENT '时间戳',
   PRIMARY KEY (`account_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 ```
