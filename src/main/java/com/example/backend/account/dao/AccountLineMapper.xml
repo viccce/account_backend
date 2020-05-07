@@ -9,8 +9,11 @@
         select
             account_line_id as accountLineId,
             account_id as accountId,
+            account_type as accountType,
             change_money as changeMoney,
-            change_time as changeTime
+            change_time as changeTime,
+            change_user_id as changeUserId,
+            pay_type as payType
         from
             account_line
         <where>
@@ -23,15 +26,21 @@
         (
             account_line_id,
             account_id,
+            account_type,
             change_money,
-            change_time
+            change_time,
+            change_user_id,
+            pay_type
         )
         values
         (
             #{accountLineId},
             #{accountId},
+            #{accountType},
             #{changeMoney},
-            #{changeTime}
+            #{changeTime},
+            #{changeUserId},
+            #{payType}
         )
     </insert>
 
