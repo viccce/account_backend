@@ -29,7 +29,14 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AccountVo doDetail(AccountVo account) {
-        return null;
+        AccountVo vo = accountDao.doDetail(account);
+        if(vo != null){
+            AccountLineVo param = new AccountLineVo();
+            param.setAccountId(account.getAccountId());
+            List<AccountLineVo> detailList = accountLineDao.findList(param);
+            vo.setDetailList(detailList);
+        }
+            return vo;
     }
 
     @Override

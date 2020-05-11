@@ -19,6 +19,7 @@
         <where>
             account_id = #{accountId}
         </where>
+        order by change_time desc
     </select>
 
     <insert id="create" parameterType="com.example.backend.account.vo.AccountLineVo">
