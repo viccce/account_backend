@@ -10,9 +10,9 @@ public interface AccountLineDao {
 
     List<AccountLineVo> findList(AccountLineVo line);
 
-    void create(AccountLineVo line);
+    int create(AccountLineVo line);
 
-    void update(AccountLineVo line);
+    int update(AccountLineVo line);
 
-    void delete(AccountLineVo line);
+    int delete(AccountLineVo line);
 }

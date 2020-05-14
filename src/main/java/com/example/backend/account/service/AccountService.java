@@ -1,5 +1,6 @@
 package com.example.backend.account.service;
 
+import com.example.backend.account.vo.AccountLineVo;
 import com.example.backend.account.vo.AccountUserRelationVo;
 import com.example.backend.account.vo.AccountVo;
 
@@ -16,4 +17,8 @@ public interface AccountService {
     void doDelete(AccountVo account);
 
     void changeUser(AccountUserRelationVo relation);
+
+    void doSaveDetail(AccountLineVo line);
+
+    List<AccountUserRelationVo> getAccountUserList(AccountUserRelationVo relation);
 }

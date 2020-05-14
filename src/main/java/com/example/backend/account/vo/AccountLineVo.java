@@ -12,6 +12,7 @@ public class AccountLineVo implements Serializable {
     private long changeMoney;
     private Date changeTime;
     private Long changeUserId;
+    private String changeUserName;
     private String payType;
 
 
@@ -71,5 +72,13 @@ public class AccountLineVo implements Serializable {
 
     public void setPayType(String payType) {
         this.payType = payType;
+    }
+
+    public String getChangeUserName() {
+        return changeUserName;
+    }
+
+    public void setChangeUserName(String changeUserName) {
+        this.changeUserName = changeUserName;
     }
 }

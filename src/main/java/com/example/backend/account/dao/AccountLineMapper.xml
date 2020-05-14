@@ -7,19 +7,21 @@
             parameterType="com.example.backend.account.vo.AccountLineVo"
             resultType="com.example.backend.account.vo.AccountLineVo">
         select
-            account_line_id as accountLineId,
-            account_id as accountId,
-            account_type as accountType,
-            change_money as changeMoney,
-            change_time as changeTime,
-            change_user_id as changeUserId,
-            pay_type as payType
+            acc.account_line_id as accountLineId,
+            acc.account_id as accountId,
+            acc.account_type as accountType,
+            acc.change_money as changeMoney,
+            acc.change_time as changeTime,
+            acc.pay_type as payType,
+            acc.change_user_id as changeUserId,
+            u.nickname as changeUserName
         from
-            account_line
+            account_line acc
+            left join user u on acc.change_user_id = u.id
         <where>
-            account_id = #{accountId}
+            acc.account_id = #{accountId}
         </where>
-        order by change_time desc
+        order by acc.change_time desc
     </select>
 
     <insert id="create" parameterType="com.example.backend.account.vo.AccountLineVo">

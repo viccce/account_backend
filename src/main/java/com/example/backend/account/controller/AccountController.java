@@ -2,6 +2,7 @@ package com.example.backend.account.controller;
 
 import com.example.backend.account.service.AccountService;
 import com.example.backend.account.vo.AccountLineVo;
+import com.example.backend.account.vo.AccountUserRelationVo;
 import com.example.backend.account.vo.AccountVo;
 import com.example.backend.constant.Result;
 import org.springframework.stereotype.Controller;
@@ -41,6 +42,16 @@ public class AccountController {
         return result;
     }
 
+    @RequestMapping(value = "/saveline", method = RequestMethod.POST)
+    @ResponseBody
+    public Result<AccountLineVo> doSaveDetail(@RequestBody AccountLineVo line){
+        accountService.doSaveDetail(line);
+        Result<AccountLineVo> result = new Result<>();
+        result.setMessage("success");
+        result.setResultCode("0");
+        return result;
+    }
+
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
     public Result<AccountVo> deDelete(@RequestBody AccountVo account){
@@ -59,6 +70,27 @@ public class AccountController {
         result.setMessage("success");
         result.setResultCode("0");
         result.setResult(accountVo);
+        return result;
+    }
+
+    @RequestMapping(value = "/changeuser", method = RequestMethod.POST)
+    @ResponseBody
+    public Result<AccountVo> changeUser(@RequestBody AccountUserRelationVo account){
+        accountService.changeUser(account);
+        Result<AccountVo> result = new Result<>();
+        result.setMessage("success");
+        result.setResultCode("0");
+        return result;
+    }
+
+    @RequestMapping(value = "/user/list", method = RequestMethod.POST)
+    @ResponseBody
+    public Result<List<AccountUserRelationVo>> findUserList(@RequestBody AccountUserRelationVo account){
+        List<AccountUserRelationVo> list = accountService.getAccountUserList(account);
+        Result<List<AccountUserRelationVo>> result = new Result<>();
+        result.setMessage("success");
+        result.setResultCode("0");
+        result.setResult(list);
         return result;
     }
 }

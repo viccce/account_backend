@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -51,6 +52,22 @@ public class UserController {
         result.setResultCode("0");
         result.setMessage("success");
         result.setResult(userVo);
+        return result;
+    }
+
+    /**
+     * 获取用户list
+     * @param user 用户参数
+     * @return 用户信息
+     */
+    @RequestMapping(value = "/list", method = RequestMethod.POST)
+    @ResponseBody
+    public Result<List<UserVo>> findList(@RequestBody UserVo user) {
+        Result<List<UserVo>> result = new Result<>();
+        List<UserVo> list = userService.findList(user);
+        result.setResultCode("0");
+        result.setMessage("success");
+        result.setResult(list);
         return result;
     }
 

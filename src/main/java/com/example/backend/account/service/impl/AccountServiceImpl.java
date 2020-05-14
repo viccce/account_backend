@@ -10,6 +10,7 @@ import com.example.backend.account.vo.AccountVo;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -91,5 +92,25 @@ public class AccountServiceImpl implements AccountService {
         } else if (relation.getActionType() != null && "delete".equals(relation.getActionType())) {
             accountUserRelationDao.delete(relation);
         }
+    }
+
+    @Override
+    public void doSaveDetail(AccountLineVo line) {
+        line.setChangeTime(new Date());
+        int count = accountLineDao.create(line);
+        if(count != 0){
+            AccountVo account = new AccountVo();
+            account.setAccountId(line.getAccountId());
+            AccountVo vo = accountDao.doDetail(account);
+            vo.setBalance(vo.getBalance()+line.getChangeMoney());
+            vo.setOldTimestamp(vo.getTimestamp());
+            vo.setTimestamp(System.currentTimeMillis());
+            accountDao.update(vo);
+        }
+    }
+
+    @Override
+    public List<AccountUserRelationVo> getAccountUserList(AccountUserRelationVo relation) {
+        return accountUserRelationDao.findList(relation);
     }
 }
