@@ -22,7 +22,7 @@
                 account_id = #{accountId}
             </if>
             <if test="userId != null">
-                user_id = #{userId}
+                and user_id = #{userId}
             </if>
     </delete>
 

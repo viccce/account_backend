@@ -34,6 +34,7 @@ public class AccountServiceImpl implements AccountService {
         if(vo != null){
             AccountLineVo param = new AccountLineVo();
             param.setAccountId(account.getAccountId());
+            param.setAccountType(account.getAccountType());
             List<AccountLineVo> detailList = accountLineDao.findList(param);
             vo.setDetailList(detailList);
         }

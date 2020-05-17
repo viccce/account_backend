@@ -20,6 +20,9 @@
             left join user u on acc.change_user_id = u.id
         <where>
             acc.account_id = #{accountId}
+            <if test="accountType != null and accountType !=''">
+                and acc.account_type like concat(#{accountType},"%")
+            </if>
         </where>
         order by acc.change_time desc
     </select>

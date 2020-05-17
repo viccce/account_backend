@@ -14,6 +14,7 @@ public class AccountVo implements Serializable {
     private long balance;
     private List<AccountLineVo> detailList;
     private String actionType;
+    private String accountType;
 
     public Long getAccountId() {
         return accountId;
@@ -79,5 +80,13 @@ public class AccountVo implements Serializable {
 
     public void setOldTimestamp(Long oldTimestamp) {
         this.oldTimestamp = oldTimestamp;
+    }
+
+    public String getAccountType() {
+        return accountType;
+    }
+
+    public void setAccountType(String accountType) {
+        this.accountType = accountType;
     }
 }
